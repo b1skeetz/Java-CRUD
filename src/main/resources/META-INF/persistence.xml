@@ -3,7 +3,12 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-  <persistence-unit name="default">
-
+  <persistence-unit name="main">
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+      <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/crud"/>
+      <property name="hibernate.connection.username" value="postgres"/>
+      <property name="hibernate.connection.password" value="mercy07"/>
+    </properties>
   </persistence-unit>
 </persistence>

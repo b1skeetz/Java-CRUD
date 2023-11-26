@@ -7,13 +7,14 @@ import jakarta.persistence.*;
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(name = "model")
     private String model;
     @Column(name = "color")
     private String color;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    //@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -25,7 +26,7 @@ public class Vehicle {
         this.color = color;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

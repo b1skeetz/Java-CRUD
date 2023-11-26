@@ -1,6 +1,8 @@
 package org.models;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -8,14 +10,14 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "age")
     private int age;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Vehicle> vehicles;
+    private List<Vehicle> vehicles = new ArrayList<>();
 
     public User(){
 
@@ -33,7 +35,7 @@ public class User {
         vehicles.remove(vehicle);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
