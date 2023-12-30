@@ -19,8 +19,8 @@ public class UserService {
     public void saveUser(User user){
         userDao.save(user);
     }
-    public void deleteUser(User user){
-        userDao.delete(user);
+    public void deleteUser(int id){
+        userDao.delete(id);
     }
     public void updateUser(User user){
         userDao.save(user);

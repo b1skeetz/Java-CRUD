@@ -8,19 +8,15 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-
         UserService userService = new UserService();
-        User user = new User("Kirill",41);
-        Vehicle ferrari = new Vehicle("Ferrari", "red");
+        User user = new User("Andrey",64);
+        Vehicle ferrari = new Vehicle("Mercedes", "black");
         ferrari.setUser(user);
         user.addVehicle(ferrari);
-        Vehicle ford = new Vehicle("Ford", "black");
+        Vehicle ford = new Vehicle("Lada", "pink");
         ford.setUser(user);
         user.addVehicle(ford);
         //userService.saveUser(user);
-        EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
-        User userToDelete = manager.find(User.class, 14);
-        userService.deleteUser(userToDelete);
-        manager.close();
+        userService.deleteUser(15);
     }
 }
