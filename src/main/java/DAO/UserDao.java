@@ -31,26 +31,24 @@ public class UserDao {
 
     public void save(User user) {
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
-        EntityTransaction transaction = manager.getTransaction();
         try {
-            transaction.begin();
+            manager.getTransaction().begin();
             manager.persist(user);
             for (Vehicle vehicle : user.getVehicles()) {
                 manager.persist(vehicle);
             }
-            transaction.commit();
+            manager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            transaction.rollback();
+            manager.getTransaction().rollback();
             throw new RuntimeException();
         }
         manager.close();
     }
     public void delete(int id){
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
-        EntityTransaction transaction = manager.getTransaction();
         try {
-            transaction.begin();
+            manager.getTransaction().begin();
             TypedQuery<User> findByIdQuery = manager.createQuery("select u from User u where u.id = ?1", User.class);
             findByIdQuery.setParameter(1, id);
             User userForDelete = findByIdQuery.getSingleResult();
@@ -58,13 +56,16 @@ public class UserDao {
                 manager.remove(userForDelete.getVehicles().get(i));
             }
             manager.remove(userForDelete);
-            transaction.commit();
+            manager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            transaction.rollback();
+            manager.getTransaction().rollback();
             throw new RuntimeException();
         }
         manager.close();
+    }
+    public void update(int id){
+
     }
     public List<User> findAll(){
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
