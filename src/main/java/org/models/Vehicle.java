@@ -1,7 +1,11 @@
 package org.models;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+
+@Getter
+@Setter
 @Entity
 @Table(name = "vehicle")
 public class Vehicle {
@@ -24,34 +28,6 @@ public class Vehicle {
     public Vehicle(String model, String color){
         this.model = model;
         this.color = color;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
