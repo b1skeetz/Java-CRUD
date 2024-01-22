@@ -12,7 +12,10 @@ public class Main {
         Vehicle ford = new Vehicle("Lada", "pink");
         ford.setUser(user);
         user.addVehicle(ford);
+        User selectedUser = userService.findUser(13);
+        selectedUser.setName("Oleg");
+        userService.updateUser(selectedUser);
         //userService.saveUser(user);
-        userService.deleteUser(15);
+        //userService.deleteUser(15);
     }
 }
