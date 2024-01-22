@@ -23,7 +23,7 @@ public class UserService {
         userDao.delete(id);
     }
     public void updateUser(User user){
-        userDao.save(user);
+        userDao.update(user);
     }
     public List<User> findAllUsers(){
         return userDao.findAll();

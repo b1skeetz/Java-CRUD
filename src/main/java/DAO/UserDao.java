@@ -2,6 +2,7 @@ package DAO;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.models.Vehicle;
 import org.models.User;
@@ -64,8 +65,24 @@ public class UserDao {
         }
         manager.close();
     }
-    public void update(int id){
+    public void update(User user){
+        EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            manager.getTransaction().begin();
+            Query updateUser = manager.createQuery("update User u set u.name = ?1, u.age = ?2, u.vehicles = ?3 where u.id = ?4", User.class);
+            updateUser.setParameter(1, user.getName());
+            updateUser.setParameter(2, user.getAge());
+            updateUser.setParameter(3, user.getVehicles());
+            updateUser.setParameter(4, user.getId());
+            updateUser.executeUpdate();
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            manager.getTransaction().rollback();
+            throw new RuntimeException();
+        }
 
+        manager.close();
     }
     public List<User> findAll(){
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
