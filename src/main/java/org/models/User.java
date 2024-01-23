@@ -41,10 +41,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "models.User{" +
-                "id = " + getId() +
-                ", name = `" + getName() + "`" +
-                ", age = " + getAge() +
-                "}";
+        StringBuilder vehicles = new StringBuilder();
+        for (Vehicle vehicle : getVehicles()) {
+            vehicles.append(vehicle.getColor()).append(" ").append(vehicle.getModel()).append("\n");
+        }
+        return String.format("Mr. (Miss) %s %d years old has:\n%s", getName(), getAge(), vehicles);
     }
 }
