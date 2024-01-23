@@ -13,7 +13,8 @@ public class Main {
         ford.setUser(user);
         user.addVehicle(ford);
         User selectedUser = userService.findUser(13);
-        selectedUser.setName("Oleg");
+        selectedUser.setName("Kiriko");
+        selectedUser.getVehicles().get(0).setColor("green");
         userService.updateUser(selectedUser);
         //userService.saveUser(user);
         //userService.deleteUser(15);

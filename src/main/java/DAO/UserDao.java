@@ -69,12 +69,20 @@ public class UserDao {
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
         try {
             manager.getTransaction().begin();
-            //Query updateVehicles = manager.createQuery("update Vehicle v set ")
             Query updateUser = manager.createQuery("update User u set u.name = ?1, u.age = ?2 where u.id = ?3");
             updateUser.setParameter(1, user.getName());
             updateUser.setParameter(2, user.getAge());
             updateUser.setParameter(3, user.getId());
-            int update = updateUser.executeUpdate();
+            updateUser.executeUpdate();
+
+            Query updateVehicle = manager.createQuery("update Vehicle v set v.model = ?1, v.color = ?2 " +
+                    "where v.id = ?3");
+            for(int i = 0; i < user.getVehicles().size(); i++){
+                updateVehicle.setParameter(1, user.getVehicles().get(i).getModel());
+                updateVehicle.setParameter(2, user.getVehicles().get(i).getColor());
+                updateVehicle.setParameter(3, user.getVehicles().get(i).getId());
+                updateVehicle.executeUpdate();
+            }
             manager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
