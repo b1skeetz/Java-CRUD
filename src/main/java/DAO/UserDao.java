@@ -1,9 +1,7 @@
 package DAO;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
+import org.hibernate.Transaction;
 import org.models.Vehicle;
 import org.models.User;
 import utils.EntityManagerFactoryUtil;
@@ -12,25 +10,53 @@ import java.util.List;
 
 public class UserDao {
 
-    public User findById(int id) {
+    public static User findById(int id) {
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
-        TypedQuery<User> findByIdQuery = manager.createQuery("select u from User u where u.id = ?1", User.class);
-        findByIdQuery.setParameter(1, id);
-        User user = findByIdQuery.getSingleResult();
+        User user;
+        try{
+            TypedQuery<User> findByIdQuery = manager.createQuery("select u from User u where u.id = ?1", User.class);
+            findByIdQuery.setParameter(1, id);
+            user = findByIdQuery.getSingleResult();
+        } catch (NoResultException e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
         manager.close();
         return user;
     }
 
-    public Vehicle findVehicleById(int id) {
+    public static Vehicle findVehicleById(int id) {
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
-        TypedQuery<Vehicle> findByIdQuery = manager.createQuery("select v from Vehicle v where v.id = ?1", Vehicle.class);
-        findByIdQuery.setParameter(1, id);
-        Vehicle vehicle = findByIdQuery.getSingleResult();
+        Vehicle vehicle;
+        try{
+            TypedQuery<Vehicle> findByIdQuery = manager.createQuery("select v from Vehicle v where v.id = ?1", Vehicle.class);
+            findByIdQuery.setParameter(1, id);
+            vehicle = findByIdQuery.getSingleResult();
+        } catch (NoResultException e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
         manager.close();
         return vehicle;
     }
 
-    public void save(User user) {
+    public static Vehicle findVehicleByUser(User user, int id){
+        EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
+        Vehicle vehicle;
+        try{
+            TypedQuery<Vehicle> findByIdQuery = manager.createQuery("select v from Vehicle v where v.id = ?1 and v.user.id = ?2", Vehicle.class);
+            findByIdQuery.setParameter(1, id);
+            findByIdQuery.setParameter(2, user.getId());
+            vehicle = findByIdQuery.getSingleResult();
+        } catch (NoResultException e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+        manager.close();
+        return vehicle;
+    }
+
+    public static void save(User user) {
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
         try {
             manager.getTransaction().begin();
@@ -46,7 +72,7 @@ public class UserDao {
         }
         manager.close();
     }
-    public void delete(int id){
+    public static void delete(int id){
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
         try {
             manager.getTransaction().begin();
@@ -65,7 +91,7 @@ public class UserDao {
         }
         manager.close();
     }
-    public void update(User user){
+    public static void update(User user){
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
         try {
             manager.getTransaction().begin();
@@ -91,7 +117,7 @@ public class UserDao {
         }
         manager.close();
     }
-    public List<User> findAll(){
+    public static List<User> findAll(){
         EntityManager manager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
         TypedQuery<User> getAllUsersQuery = manager.createQuery("select u from User u", User.class);
         List<User> users = getAllUsersQuery.getResultList();
