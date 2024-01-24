@@ -34,14 +34,15 @@ public class Main {
                     String createName = scanner.nextLine();
                     System.out.print("Enter age: ");
                     int createAge = Integer.parseInt(scanner.nextLine());
-
+                    System.out.print("Vehicles amount: ");
+                    int vehicleAmount = Integer.parseInt(scanner.nextLine());
                     List<Vehicle> createVehicles = new ArrayList<>();
                     for(int i = 0; i < vehicleAmount; i++){
                         System.out.println("Enter model: ");
-                        model = scanner.nextLine();
+                        modelCreate = scanner.nextLine();
                         System.out.println("Enter color: ");
-                        color = scanner.nextLine();
-                        createVehicles.add(new Vehicle(model, color));
+                        colorCreate = scanner.nextLine();
+                        createVehicles.add(new Vehicle(modelCreate, colorCreate));
                     }
                     User createUser = new User();
                     createUser.setName(createName);
@@ -60,8 +61,8 @@ public class Main {
                     System.out.print("Enter age: ");
                     int updateAge = Integer.parseInt(scanner.nextLine());
                     System.out.print("Vehicles amount: ");
-                    int vehicleAmount = Integer.parseInt(scanner.nextLine());
-                    /*
+                    /*int vehicleAmount = Integer.parseInt(scanner.nextLine());
+
                     for(int i = 0; i < vehicleAmount; i++){
                         System.out.println("Enter model: ");
                         model = scanner.nextLine();
