@@ -60,21 +60,30 @@ public class Main {
                     String updateName = scanner.nextLine();
                     System.out.print("Enter age: ");
                     int updateAge = Integer.parseInt(scanner.nextLine());
-                    System.out.print("Vehicles amount: ");
-                    /*int vehicleAmount = Integer.parseInt(scanner.nextLine());
 
-                    for(int i = 0; i < vehicleAmount; i++){
+                    if(updateName.isEmpty()){
+                        updateName = existingUser.getName();
+                    }
+                    if(updateAge == 0){
+                        updateAge = existingUser.getAge();
+                    }
+                    existingUser.setName(updateName);
+                    existingUser.setAge(updateAge);
+                    for(int i = 0; i < existingUser.getVehicles().size(); i++){
                         System.out.println("Enter model: ");
                         model = scanner.nextLine();
                         System.out.println("Enter color: ");
                         color = scanner.nextLine();
-                        createVehicles.add(new Vehicle(model, color));
+                        if(model.isEmpty()){
+                            existingUser.getVehicles().get(i).setModel(existingUser.getVehicles().get(i).getModel());
+                        }
+                        if(color.isEmpty()){
+                            existingUser.getVehicles().get(i).setColor(existingUser.getVehicles().get(i).getColor());
+                        }
+                        existingUser.getVehicles().get(i).setModel(model);
+                        existingUser.getVehicles().get(i).setColor(color);
                     }
-                    User createUser = new User();
-                    createUser.setName(createName);
-                    createUser.setAge(createAge);
-                    createUser.setVehicles(createVehicles);
-                    UserDao.save(createUser);*/
+                    UserDao.update(existingUser);
                     break;
                 case 3:
                     System.out.println("=======Delete=======");
