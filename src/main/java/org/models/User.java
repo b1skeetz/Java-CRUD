@@ -17,7 +17,7 @@ public class User {
     @Column(name = "name")
     private String name;
     @Column(name = "age")
-    private int age;
+    private Integer age;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Vehicle> vehicles = new ArrayList<>();

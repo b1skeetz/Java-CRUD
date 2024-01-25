@@ -21,10 +21,11 @@ public class Main {
                 System.out.println(user);
             }
             System.out.println("========================");
-            System.out.println("Choose operation: \n" +
+            System.out.println("Choose operation:\n" +
                     "1. Create\n" +
                     "2. Update\n" +
-                    "3. Delete\n");
+                    "3. Delete\n" +
+                    "4. Exit");
             int operation = Integer.parseInt(scanner.nextLine());
             switch(operation){
                 case 1:
@@ -33,18 +34,23 @@ public class Main {
                     System.out.print("Enter name: ");
                     String createName = scanner.nextLine();
                     System.out.print("Enter age: ");
-                    int createAge = Integer.parseInt(scanner.nextLine());
+                    Integer createAge = Integer.valueOf(scanner.nextLine());
+                    if(createName.isEmpty()){
+                        createName = "null";
+                    }
                     System.out.print("Vehicles amount: ");
                     int vehicleAmount = Integer.parseInt(scanner.nextLine());
                     List<Vehicle> createVehicles = new ArrayList<>();
+                    User createUser = new User();
                     for(int i = 0; i < vehicleAmount; i++){
                         System.out.println("Enter model: ");
                         modelCreate = scanner.nextLine();
                         System.out.println("Enter color: ");
                         colorCreate = scanner.nextLine();
-                        createVehicles.add(new Vehicle(modelCreate, colorCreate));
+                        Vehicle vehicle = new Vehicle(modelCreate, colorCreate);
+                        vehicle.setUser(createUser);
+                        createVehicles.add(vehicle);
                     }
-                    User createUser = new User();
                     createUser.setName(createName);
                     createUser.setAge(createAge);
                     createUser.setVehicles(createVehicles);
@@ -59,7 +65,7 @@ public class Main {
                     System.out.print("Enter name: ");
                     String updateName = scanner.nextLine();
                     System.out.print("Enter age: ");
-                    int updateAge = Integer.parseInt(scanner.nextLine());
+                    int updateAge = Integer.valueOf(scanner.nextLine());
 
                     if(updateName.isEmpty()){
                         updateName = existingUser.getName();
@@ -98,6 +104,18 @@ public class Main {
                     } else if (affirmation.equalsIgnoreCase("n") || affirmation.equalsIgnoreCase("no")){
                         deleteId = 0;
                         System.out.println("Delete operation is canceled");
+                    }
+                    break;
+                case 4:
+                    System.out.println("=======Exit=======");
+                    System.out.println("Do you want to exit? [y/n]: ");
+                    String exit = scanner.nextLine();
+                    System.out.println();
+                    if(exit.equalsIgnoreCase("y") || exit.equalsIgnoreCase("yes")){
+                        System.out.println("Good bye!");
+                        isWork = false;
+                    } else if (exit.equalsIgnoreCase("n") || exit.equalsIgnoreCase("no")){
+                        System.out.println("You are still here");
                     }
                     break;
                 default:
