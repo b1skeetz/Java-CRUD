@@ -14,7 +14,7 @@ public class Main {
         UserService userService = new UserService();
         Scanner scanner = new Scanner(System.in);
         boolean isWork = true;
-        while(isWork){
+        while (isWork) {
             System.out.println("========================");
             List<User> users = userService.findAllUsers();
             for (User user : users) {
@@ -27,22 +27,34 @@ public class Main {
                     "3. Delete\n" +
                     "4. Exit");
             int operation = Integer.parseInt(scanner.nextLine());
-            switch(operation){
+            switch (operation) {
                 case 1:
                     String modelCreate, colorCreate;
                     System.out.println("=======Create=======");
                     System.out.print("Enter name: ");
                     String createName = scanner.nextLine();
                     System.out.print("Enter age: ");
-                    Integer createAge = Integer.valueOf(scanner.nextLine());
-                    if(createName.isEmpty()){
+                    Integer createAge;
+                    try {
+                        createAge = Integer.valueOf(scanner.nextLine());
+                    } catch (NumberFormatException e){
+                        System.out.println("Enter correct age! Age automatically is initialized with value: 1");
+                        createAge = 1;
+                    }
+                    if (createName.isEmpty()) {
                         createName = "null";
                     }
                     System.out.print("Vehicles amount: ");
-                    int vehicleAmount = Integer.parseInt(scanner.nextLine());
+                    int vehicleAmount;
+                    try{
+                        vehicleAmount = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e){
+                        System.out.println("Enter correct amount of vehicles! Age automatically is initialized with value: 0");
+                        vehicleAmount = 0;
+                    }
                     List<Vehicle> createVehicles = new ArrayList<>();
                     User createUser = new User();
-                    for(int i = 0; i < vehicleAmount; i++){
+                    for (int i = 0; i < vehicleAmount; i++) {
                         System.out.println("Enter model: ");
                         modelCreate = scanner.nextLine();
                         System.out.println("Enter color: ");
@@ -65,25 +77,26 @@ public class Main {
                     System.out.print("Enter name: ");
                     String updateName = scanner.nextLine();
                     System.out.print("Enter age: ");
-                    int updateAge = Integer.valueOf(scanner.nextLine());
-
-                    if(updateName.isEmpty()){
-                        updateName = existingUser.getName();
-                    }
-                    if(updateAge == 0){
+                    int updateAge;
+                    try{
+                        updateAge = Integer.valueOf(scanner.nextLine());
+                    } catch (NumberFormatException e){
                         updateAge = existingUser.getAge();
+                    }
+                    if (updateName.isEmpty()) {
+                        updateName = existingUser.getName();
                     }
                     existingUser.setName(updateName);
                     existingUser.setAge(updateAge);
-                    for(int i = 0; i < existingUser.getVehicles().size(); i++){
+                    for (int i = 0; i < existingUser.getVehicles().size(); i++) {
                         System.out.println("Enter model: ");
                         model = scanner.nextLine();
                         System.out.println("Enter color: ");
                         color = scanner.nextLine();
-                        if(model.isEmpty()){
+                        if (model.isEmpty()) {
                             existingUser.getVehicles().get(i).setModel(existingUser.getVehicles().get(i).getModel());
                         }
-                        if(color.isEmpty()){
+                        if (color.isEmpty()) {
                             existingUser.getVehicles().get(i).setColor(existingUser.getVehicles().get(i).getColor());
                         }
                         existingUser.getVehicles().get(i).setModel(model);
@@ -98,10 +111,10 @@ public class Main {
                     System.out.print(String.format("Are you sure about it? User %s will be deleted forever! [y/n]: "));
                     String affirmation = scanner.nextLine();
                     System.out.println();
-                    if(affirmation.equalsIgnoreCase("y") || affirmation.equalsIgnoreCase("yes")){
+                    if (affirmation.equalsIgnoreCase("y") || affirmation.equalsIgnoreCase("yes")) {
                         UserDao.delete(deleteId);
                         System.out.println("Delete operation is done");
-                    } else if (affirmation.equalsIgnoreCase("n") || affirmation.equalsIgnoreCase("no")){
+                    } else if (affirmation.equalsIgnoreCase("n") || affirmation.equalsIgnoreCase("no")) {
                         deleteId = 0;
                         System.out.println("Delete operation is canceled");
                     }
@@ -111,10 +124,10 @@ public class Main {
                     System.out.println("Do you want to exit? [y/n]: ");
                     String exit = scanner.nextLine();
                     System.out.println();
-                    if(exit.equalsIgnoreCase("y") || exit.equalsIgnoreCase("yes")){
+                    if (exit.equalsIgnoreCase("y") || exit.equalsIgnoreCase("yes")) {
                         System.out.println("Good bye!");
                         isWork = false;
-                    } else if (exit.equalsIgnoreCase("n") || exit.equalsIgnoreCase("no")){
+                    } else if (exit.equalsIgnoreCase("n") || exit.equalsIgnoreCase("no")) {
                         System.out.println("You are still here");
                     }
                     break;
